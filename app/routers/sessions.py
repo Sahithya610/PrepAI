@@ -1,9 +1,10 @@
 from fastapi import APIRouter, status, HTTPException
+from app.schemas.session import SessionCreate, SessionUpdate
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
-def create_sessions():
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=SessionCreate)
+def create_sessions(session : SessionCreate):
     return{"message":"created session"}
 
 @router.get("/", status_code=status.HTTP_200_OK)
