@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.session import UserCreate, UserLogin
+from app.schemas.user import UserCreate, UserLogin
 router = APIRouter(prefix="/auth", tags=["users"])
 
 users = []

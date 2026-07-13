@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from datetime import datetime
-from pathlib import Path
+from app.database import Base, engine
+from app.routers import sessions, users, auth, questions
 import os
-import importlib
 
 load_dotenv()
 
@@ -14,19 +14,15 @@ def health():
     return{
         "status": "ok",
         "app": "PrepAI",
-        "version":os.getenv("APP_NAME"),
+        "version":os.getenv("APP_VERSION"),
         "timestamp": datetime.now().isoformat()
     }
+app.include_router(sessions.router)
+app.include_router(users.router)
+app.include_router(auth.router)
+app.include_router(questions.router)
 
-routers_dir = Path(__file__).parent/"routers"
-
-for file in routers_dir.glob("*.py"):
-    if file.stem.startswith("_"):
-        continue
-
-    module = importlib.import_module(f"routers.{file.stem}")
-
-    if hasattr(module, "router"):
-        app.include_router(module.router)
-
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
 

@@ -1,30 +1,23 @@
 from pydantic import BaseModel, ValidationError, Field, EmailStr
 from datetime import datetime
+from enum import Enum
+import uuid
 
 #object.model_dump()
 #object.model_dump_json(indent=2)
 #pydantic has default type conversion
 #Field(default_factory=list)
-class UserCreate(BaseModel):
-    email : EmailStr
-    username : str = Field(..., min_length=3, max_length=50)
-    password : str = Field(..., min_length=8)
 
-class UserLogin(BaseModel):
-    email : EmailStr
-    password : str
-
-class UserResponse(BaseModel):
-    id : int
-    email : EmailStr
-    username : str
-    created_at : datetime
+class DifficultyEnum(str, Enum):
+    easy = "easy"
+    medium = "medium"
+    hard = "hard"
 
 #session schemas
 class SessionCreate(BaseModel):
-    title : str
-    role : str
-    difficulty : str
+    title : str = Field(..., min_length=3, max_length=100)
+    role : str = Field(..., eample="Backend Engineer")
+    difficulty : DifficultyEnum = DifficultyEnum.medium
 
 class SessionUpdate(BaseModel):
     title : str | None = None
@@ -32,30 +25,11 @@ class SessionUpdate(BaseModel):
     difficulty : str | None = None
 
 class SessionResponse(BaseModel):
-    id : int
-    user_id : int
+    id : UUID
     title : str
     role : str
-    difficulty : str
+    difficulty : DifficultyEnum
     status : str
     created_at : datetime
 
-class QuestionCreate(BaseModel):
-    question_text : str
-
-class QuestionWithAnswer(BaseModel):
-    question_text : str
-    user_answer: str
-
-class QuestionResponse(BaseModel):
-    question_text : str
-    user_answer : str
-    ai_feedback : str
-    score : int
-
-class Token(BaseModel):
-    access_token : int
-    token_type : str
-
-class TokenData(BaseModel):
-    email : EmailStr
+    model_config = {"from_attributes": True}
