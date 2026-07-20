@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ValidationError, Field, EmailStr
 from datetime import datetime
+from uuid import UUID
 
 class UserCreate(BaseModel):
     email : EmailStr
@@ -11,7 +12,7 @@ class UserLogin(BaseModel):
     password : str
 
 class UserResponse(BaseModel):
-    id : int
+    id : UUID
     email : EmailStr
     username : str
     created_at : datetime

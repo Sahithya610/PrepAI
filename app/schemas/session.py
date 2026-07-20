@@ -2,6 +2,7 @@ from pydantic import BaseModel, ValidationError, Field, EmailStr
 from datetime import datetime
 from enum import Enum
 import uuid
+from uuid import UUID
 
 #object.model_dump()
 #object.model_dump_json(indent=2)
@@ -16,7 +17,7 @@ class DifficultyEnum(str, Enum):
 #session schemas
 class SessionCreate(BaseModel):
     title : str = Field(..., min_length=3, max_length=100)
-    role : str = Field(..., eample="Backend Engineer")
+    role : str = Field(..., example="Backend Engineer")
     difficulty : DifficultyEnum = DifficultyEnum.medium
 
 class SessionUpdate(BaseModel):
