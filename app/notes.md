@@ -49,3 +49,17 @@ looks for "DATABASE_URL" in these places, in order:
    |
    v
    settings.DATABASE_URL is now available anywhere you import settings
+
+How JWT Works
+A JWT has three parts separated by dots:
+header.payload.signature
+Header — algorithm used:
+json{"alg": "HS256", "typ": "JWT"}
+Payload — data inside the token:
+json{"sub": "john@example.com", "exp": 1709648000}
+Signature — proof it wasn't tampered with:
+HMAC_SHA256(header + payload, SECRET_KEY)
+The signature is the key part. It's generated using your SECRET_KEY. If anyone changes even one character in the payload, the signature won't match anymore and you'll reject the token.
+Important — the payload is just base64 encoded, not encrypted. Anyone can decode and read it. So never put passwords or sensitive data inside a JWT.
+
+HS256???
