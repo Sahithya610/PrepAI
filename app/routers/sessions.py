@@ -27,15 +27,6 @@ def list_sessions(page: int=1, limit: int=10, db: Session = Depends(get_db), cur
 def get_sess(session_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return get_session(db, session_id, current_user)
 
-
-@router.post("/{id}/questions", status_code=status.HTTP_201_CREATED)
-def add_questions():
-    return{"message":"added questions"}
-
-@router.get("/{id}/questions")
-def get_questions():
-    return{"message":"List questions"}
-
 @router.put("/{session_id}", response_model=SessionResponse)
 def update(session_id: str, session_data: SessionUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return update_session(db, session_id, session_data, current_user)

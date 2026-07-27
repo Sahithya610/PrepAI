@@ -10,7 +10,7 @@ class Question(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(UUID(as_uuid=True), ForeignKey("interview_sessions.id"), nullable=False)
-    question = Column(Text, nullable=False)
+    question_text = Column(Text, nullable=False)
     user_answer = Column(Text, nullable=True)
     ai_feedback = Column(Text, nullable=True)
     score = Column(Integer, nullable=True)
