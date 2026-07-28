@@ -19,3 +19,6 @@ class QuestionResponse(BaseModel):
     score : Optional[int] = None
     created_at : datetime
     model_config = {"from_attributes": True}
+
+class SubmitAnswer(BaseModel):
+    user_answer: str
