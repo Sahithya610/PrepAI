@@ -28,7 +28,3 @@ app.include_router(users.router)
 app.include_router(auth.router)
 app.include_router(questions.router)
 
-@app.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
-
