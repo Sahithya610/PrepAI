@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     APP_NAME: str = "PrepAI"
+    APP_VERSION: str = "V1"
     DATABASE_URL: str
     SECRET_KEY: str
     ALGORITHM: str = "HS256"
