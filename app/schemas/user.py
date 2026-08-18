@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ValidationError, Field, EmailStr
 from datetime import datetime
 from uuid import UUID
+from typing import Optional
 
 class UserCreate(BaseModel):
     email : EmailStr
@@ -18,3 +19,7 @@ class UserResponse(BaseModel):
     created_at : datetime
 
     model_config = {"from_attributes": True}
+
+class UserUpdate(BaseModel):
+    username: Optional[str] = None
+    bio: Optional[str] = None
